@@ -80,13 +80,13 @@ async function loadProfile() {
   success.value = false
   error.value = false
   try {
-    const res = await api.get('/perfil.php')
+    const res = await api.get('/api/perfil.php')
     if (res && res.success && res.data) {
       profile.id = res.data.id
       profile.nombre_de_usuario = res.data.nombre_de_usuario || ''
       profile.nombre = res.data.nombre || ''
       profile.email = res.data.email || ''
-      profile.avatar = res.data.avatar || null
+      profile.avatar = res.data.avatar ? `${import.meta.env.VITE_API_BASE}/uploads/${res.data.avatar}` : null
       profile.fecha_registro = res.data.fecha_registro || ''
       form.nombre_de_usuario = profile.nombre_de_usuario
       loaded.value = true
@@ -114,9 +114,9 @@ async function saveProfile() {
   saving.value = true
   try {
     const fd = new FormData()
-    if (form.nombre_de_usuario && form.nombre_de_usuario !== profile.nombre_de_usuario) fd.append('nombre', form.nombre_de_usuario)
+    if (form.nombre_de_usuario && form.nombre_de_usuario !== profile.nombre_de_usuario) fd.append('nombre_de_usuario', form.nombre_de_usuario)
     if (file.value) fd.append('foto', file.value)
-    const res = await api.post('/editar.php', fd)
+    const res = await api.post('/api/editar.php', fd)
     if (res && res.success) {
       message.value = 'Perfil actualizado'
       success.value = true
@@ -144,7 +144,7 @@ async function removeAvatar() {
   success.value = false
   error.value = false
   try {
-    const res = await api.post('/editar.php', { remove_avatar: true })
+    const res = await api.post('/api/editar.php', { remove_avatar: true })
     if (res && res.success) {
       message.value = 'Avatar eliminado'
       success.value = true
@@ -184,7 +184,7 @@ async function changePassword() {
   changing.value = true
   try {
     const payload = { password_actual: passwords.password_actual, password_nueva: passwords.password_nueva }
-    const res = await api.post('/editar.php', payload)
+    const res = await api.post('/api/editar.php', payload)
     if (res && res.success) {
       message.value = 'Contraseña cambiada'
       success.value = true

@@ -20,6 +20,8 @@ const routes = [
   { path: '/agenda/actualizar/:id', name: 'agenda-update', component: Edit, meta: { requiresAuth: true }, props: route => ({ id: Number(route.params.id), readOnly: false }) },
   { path: '/agenda/:id', name: 'agenda-edit', component: Edit, meta: { requiresAuth: true }, props: true },
   { path: '/perfil', name: 'profile', component: Profile, meta: { requiresAuth: true } }
+
+  { path: '/:pathMatch(.*)*', name: 'not-found', redirect: '/' }
 ]
 
 const router = createRouter({

@@ -68,8 +68,7 @@ const limit = ref(12)
 const total = ref(0)
 let searchTimer = null
 
-const ENV_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const BASE = ENV_BASE || (window.location.origin + '/agendafullstack')
+const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
 const DEFAULT_AVATAR = `${BASE}/backend/uploads/default-avatar.png`
 
 function resolvePhoto(value, folder = 'contactos') {

@@ -68,15 +68,14 @@ const emit = defineEmits(['created', 'updated', 'cancel'])
 const route = useRoute()
 const auth = useAuthStore()
 
-const ENV_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const BASE = ENV_BASE || (window.location.origin + '/agendafullstack')
-const defaultAvatar = `${BASE}/backend/uploads/default-avatar.png`
+const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+const defaultAvatar = `${BASE}/uploads/default-avatar.png`
 
 function buildPhotoUrl(value, folder = 'contactos') {
   if (!value) return null
   if (/^https?:\/\//i.test(value)) return value
   const name = encodeURIComponent(String(value).replace(/^.*[\\/]/, ''))
-  return `${BASE}/backend/uploads/${folder}/${name}`
+  return `${BASE}/uploads/${folder}/${name}`
 }
 
 const local = ref({

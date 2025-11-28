@@ -46,8 +46,7 @@ const loading = ref(false)
 const err = ref('')
 const msg = ref('')
 
-const ENV_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const BASE = ENV_BASE || (window.location.origin + '/agendafullstack')
+const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
 const DEFAULT_AVATAR = `${BASE}/backend/uploads/default-avatar.png`
 
 function buildPhotoUrl(value, folder = 'contactos') {

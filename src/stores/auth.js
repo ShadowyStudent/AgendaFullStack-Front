@@ -58,7 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(payload, remember = false) {
     try {
-      const res = await api.post('/auth/login.php', payload)
+      const res = await api.post('/api/auth/login.php', payload)
       if (res && res.success && res.data?.token) {
         const newUser = res.data.user ?? { id: res.data.id, nombre_de_usuario: res.data.nombre_de_usuario }
         setSession(res.data.token, newUser, remember)
@@ -71,7 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function register(payload) {
     try {
-      const res = await api.post('/registrar.php', payload)
+      const res = await api.post('/api/registrar.php', payload)
       return res
     } catch (err) {
       return err
