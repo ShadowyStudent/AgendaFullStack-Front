@@ -7,17 +7,10 @@ const api = axios.create({
   withCredentials: false,
   timeout: 15000,
   headers: {
-    Accept: 'application/json'
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
   },
-  responseType: 'json',
-  transformResponse: [(data) => {
-    if (!data) return data
-    try {
-      return JSON.parse(data)
-    } catch {
-      return data
-    }
-  }]
+  responseType: 'json'
 })
 
 function isFormData(value) {
