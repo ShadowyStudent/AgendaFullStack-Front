@@ -75,7 +75,7 @@ function resolvePhoto(value, folder = 'contactos') {
   if (!value) return DEFAULT_AVATAR
   if (/^https?:\/\//i.test(value)) return value
   const name = encodeURIComponent(String(value).replace(/^.*[\\/]/, ''))
-  return `${BASE}/backend/uploads/${folder}/${name}`
+  return `${BASE}/uploads/${folder}/${name}`
 }
 
 async function fetchContacts() {
