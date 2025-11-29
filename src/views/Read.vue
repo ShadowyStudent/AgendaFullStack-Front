@@ -47,7 +47,7 @@ const err = ref('')
 const msg = ref('')
 
 const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const DEFAULT_AVATAR = `${BASE}/backend/uploads/default-avatar.png`
+const DEFAULT_AVATAR = `${BASE}/uploads/default-avatar.png`
 
 function buildPhotoUrl(value, folder = 'contactos') {
   if (!value) return DEFAULT_AVATAR

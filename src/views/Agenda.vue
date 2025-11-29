@@ -69,7 +69,7 @@ const total = ref(0)
 let searchTimer = null
 
 const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const DEFAULT_AVATAR = `${BASE}/backend/uploads/default-avatar.png`
+const DEFAULT_AVATAR = `${BASE}/uploads/default-avatar.png`
 
 function resolvePhoto(value, folder = 'contactos') {
   if (!value) return DEFAULT_AVATAR

@@ -86,7 +86,7 @@ async function loadProfile() {
       profile.nombre_de_usuario = res.data.nombre_de_usuario || ''
       profile.nombre = res.data.nombre || ''
       profile.email = res.data.email || ''
-      profile.avatar = res.data.avatar ? `${import.meta.env.VITE_API_BASE}/uploads/${res.data.avatar}` : null
+      profile.avatar = res.data.avatar || DEFAULT_AVATAR
       profile.fecha_registro = res.data.fecha_registro || ''
       form.nombre_de_usuario = profile.nombre_de_usuario
       loaded.value = true
