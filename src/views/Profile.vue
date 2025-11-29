@@ -62,6 +62,9 @@ import { useRouter } from 'vue-router'
 const auth = useAuthStore()
 const router = useRouter()
 
+const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+const DEFAULT_AVATAR = `${BASE}/uploads/default-avatar.png`
+
 const profile = reactive({ id: null, nombre_de_usuario: '', nombre: '', email: '', avatar: null, fecha_registro: '' })
 const form = reactive({ nombre_de_usuario: '' })
 const passwords = reactive({ password_actual: '', password_nueva: '', password_nueva_confirm: '' })
@@ -114,8 +117,13 @@ async function saveProfile() {
   saving.value = true
   try {
     const fd = new FormData()
-    if (form.nombre_de_usuario && form.nombre_de_usuario !== profile.nombre_de_usuario) fd.append('nombre_de_usuario', form.nombre_de_usuario)
-    if (file.value) fd.append('foto', file.value)
+    fd.append('id', profile.id) // obligatorio
+    if (form.nombre_de_usuario && form.nombre_de_usuario !== profile.nombre_de_usuario) {
+      fd.append('nombre_de_usuario', form.nombre_de_usuario)
+    }
+    if (file.value) {
+      fd.append('foto', file.value)
+    }
     const res = await api.post('/editar.php', fd)
     if (res && res.success) {
       message.value = 'Perfil actualizado'
@@ -144,7 +152,10 @@ async function removeAvatar() {
   success.value = false
   error.value = false
   try {
-    const res = await api.post('/editar.php', { remove_avatar: true })
+    const fd = new FormData()
+    fd.append('id', profile.id)
+    fd.append('remove_avatar', 'true')
+    const res = await api.post('/editar.php', fd)
     if (res && res.success) {
       message.value = 'Avatar eliminado'
       success.value = true
@@ -183,8 +194,11 @@ async function changePassword() {
   }
   changing.value = true
   try {
-    const payload = { password_actual: passwords.password_actual, password_nueva: passwords.password_nueva }
-    const res = await api.post('/editar.php', payload)
+    const fd = new FormData()
+    fd.append('id', profile.id)
+    fd.append('password_actual', passwords.password_actual)
+    fd.append('password_nueva', passwords.password_nueva)
+    const res = await api.post('/editar.php', fd)
     if (res && res.success) {
       message.value = 'Contraseña cambiada'
       success.value = true

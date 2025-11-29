@@ -57,8 +57,9 @@ function buildPhotoUrl(value, folder = 'contactos') {
 }
 
 const fotoSrc = computed(() => {
-  if (!contacto.value || !contacto.value.foto) return DEFAULT_AVATAR
-  return buildPhotoUrl(contacto.value.foto, 'contactos')
+  const f = contacto.value?.foto
+  if (!f) return DEFAULT_AVATAR
+  return buildPhotoUrl(f, 'contactos')
 })
 
 async function fetchContact() {

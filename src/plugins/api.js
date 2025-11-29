@@ -4,7 +4,6 @@ const DEFAULT_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
 
 const api = axios.create({
   baseURL: DEFAULT_BASE,
-  withCredentials: false,
   timeout: 15000,
   headers: {
     Accept: 'application/json',
@@ -40,14 +39,11 @@ function clearAuthToken() {
 api.interceptors.request.use(config => {
   const token = getStoredToken()
   config.headers = config.headers || {}
-  if (token && !config.headers.Authorization) {
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`
-    config.headers['X-Authorization'] = `Bearer ${token}`
   }
   if (isFormData(config.data)) {
-    if ('Content-Type' in config.headers) {
-      delete config.headers['Content-Type']
-    }
+    delete config.headers['Content-Type']
   }
   return config
 }, err => Promise.reject(err))
@@ -61,7 +57,7 @@ api.interceptors.response.use(
     const serverPayload = err.response?.data
     if (err.response?.status === 401) {
       clearAuthToken()
-      try { window.dispatchEvent(new Event('auth-logout')) } catch (e) {}
+      try { window.dispatchEvent(new Event('auth-logout')) } catch {}
     }
     if (serverPayload && typeof serverPayload === 'object') {
       return Promise.reject(serverPayload)

@@ -25,7 +25,7 @@
         <div class="col-12 col-md-6 col-lg-4" v-for="c in contacts" :key="c.id">
           <div class="card h-100">
             <div class="card-body d-flex gap-3">
-              <img :src="c.fotoResolved" crossorigin="anonymous" class="rounded avatar-thumb" :alt="c.nombre" />
+              <img :src="c.fotoResolved" class="rounded avatar-thumb" :alt="c.nombre" />
               <div class="flex-grow-1">
                 <h5 class="card-title mb-1">{{ c.nombre }} {{ c.apellido }}</h5>
                 <p class="mb-1 text-muted">{{ c.telefono }}</p>
@@ -105,7 +105,7 @@ async function fetchContacts() {
     contacts.value = list.map(item => {
       const id = item.id ?? item.contacto_id ?? null
       const rawFoto = item.foto ?? item.avatar ?? null
-      const fotoResolved = rawFoto ? ( /^https?:\/\//i.test(rawFoto) ? rawFoto : resolvePhoto(rawFoto, 'contactos') ) : DEFAULT_AVATAR
+      const fotoResolved = resolvePhoto(rawFoto, 'contactos')
       return {
         id,
         foto: rawFoto,

@@ -7,12 +7,21 @@ function safeParseJSON(key, useLocal = false) {
     const raw = useLocal ? localStorage.getItem(key) : sessionStorage.getItem(key)
     if (!raw || raw === 'undefined' || raw === 'null') return null
     return JSON.parse(raw)
-  } catch { return null }
+  } catch {
+    return null
+  }
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref(sessionStorage.getItem('agenda_token') || localStorage.getItem('agenda_token') || '')
-  const user = ref(safeParseJSON('agenda_user', !!localStorage.getItem('agenda_user')) || safeParseJSON('agenda_user', false))
+  const tokenSession = sessionStorage.getItem('agenda_token')
+  const tokenLocal = localStorage.getItem('agenda_token')
+  const token = ref(tokenSession || tokenLocal || '')
+
+  const user = ref(
+    tokenSession
+      ? safeParseJSON('agenda_user', false)
+      : safeParseJSON('agenda_user', true)
+  )
 
   function setSession(newToken, newUser, remember = false) {
     token.value = newToken || ''
@@ -60,12 +69,16 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const res = await api.post('/auth/login.php', payload)
       if (res && res.success && res.data?.token) {
-        const newUser = res.data.user ?? { id: res.data.id, nombre_de_usuario: res.data.nombre_de_usuario }
+        const newUser =
+          res.data.user ?? {
+            id: res.data.id,
+            nombre_de_usuario: res.data.nombre_de_usuario,
+          }
         setSession(res.data.token, newUser, remember)
       }
       return res
     } catch (err) {
-      return err
+      return { success: false, message: err?.message || 'Error en login' }
     }
   }
 
@@ -74,7 +87,7 @@ export const useAuthStore = defineStore('auth', () => {
       const res = await api.post('/registrar.php', payload)
       return res
     } catch (err) {
-      return err
+      return { success: false, message: err?.message || 'Error en registro' }
     }
   }
 
