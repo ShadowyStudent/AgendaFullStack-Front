@@ -47,13 +47,14 @@ const err = ref('')
 const msg = ref('')
 
 const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const DEFAULT_AVATAR = `${BASE}/uploads/default-avatar.png`
+const PUBLIC_BASE = BASE.replace(/\/api$/, '')
+const DEFAULT_AVATAR = `${PUBLIC_BASE}/uploads/default-avatar.png`
 
 function buildPhotoUrl(value, folder = 'contactos') {
   if (!value) return DEFAULT_AVATAR
   if (/^https?:\/\//i.test(value)) return value
   const name = encodeURIComponent(String(value).replace(/^.*[\\/]/, ''))
-  return `${BASE}/uploads/${folder}/${name}`
+  return `${PUBLIC_BASE}/uploads/${folder}/${name}`
 }
 
 const fotoSrc = computed(() => {

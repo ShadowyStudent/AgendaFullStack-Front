@@ -41,14 +41,3 @@ async function onDelete() {
   }
 }
 </script>
-
-<style scoped>
-.contact-img {
-  object-fit: cover;
-  height: 160px;
-  width: 100%;
-  background: #f1f1f1;
-}
-.contact-card { min-height: 260px; display:flex; flex-direction:column; }
-.card-body { flex: 1 1 auto; display:flex; flex-direction:column; justify-content:space-between; }
-</style>

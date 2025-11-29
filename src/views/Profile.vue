@@ -63,7 +63,8 @@ const auth = useAuthStore()
 const router = useRouter()
 
 const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
-const DEFAULT_AVATAR = `${BASE}/uploads/default-avatar.png`
+const PUBLIC_BASE = BASE.replace(/\/api$/, '')
+const DEFAULT_AVATAR = `${PUBLIC_BASE}/uploads/default-avatar.png`
 
 const profile = reactive({ id: null, nombre_de_usuario: '', nombre: '', email: '', avatar: null, fecha_registro: '' })
 const form = reactive({ nombre_de_usuario: '' })
