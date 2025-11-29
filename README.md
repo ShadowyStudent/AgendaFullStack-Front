@@ -1,5 +1,13 @@
-# Vue 3 + Vite
+# Proyecto Unidad 4 – (Final) Aplicación Full Stack: Front-End (Vue 3 + Vue Router + Pinia)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Objetivo
+Proveer una interfaz SPA (Vue 3 + Vue Router + Pinia) que permita a los usuarios autenticarse y gestionar su agenda (contactos y perfil) consumiendo una API REST.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Funcionamiento
+Al hacer login el backend devuelve un JWT; el frontend guarda el token en Pinia/localStorage y lo envía en el header `Authorization` para consumir los endpoints CRUD del backend. La UI muestra y actualiza contactos según las respuestas JSON de la API.
+
+## Datos del estudiante
+- **Nombre:** Álvarez López Miguel
+- **Número de control:** 22270001
+- **Grupo:** S5B
+- **Materia:** Programacion Web
